@@ -1,10 +1,11 @@
 import requests
+import json
 #发送请求，获取视频信息
 
-aid = '42939742'
-video_url = 'https://api.bilibili.com/x/web-interface/view?aid={}'.format(aid)
-user_agent = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.75 Safari/537.36'}
-res = requests.get(url = video_url, headers = user_agent)
+# aid = '42939742'
+# video_url = 'https://api.bilibili.com/x/web-interface/view?aid={}'.format(aid)
+# user_agent = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.75 Safari/537.36'}
+# res = requests.get(url = video_url, headers = user_agent)
 
 #返回数据进行解析
 # mess_obj = json.loads(res.text)
@@ -41,10 +42,13 @@ res = requests.get(url = video_url, headers = user_agent)
 
 class GVI(object):
 # GVI(get_video_info)类(传入requests返回值
-    def __init__(self, response):
-        import json
-        self.response = response
-        self._info_dict = json.loads(response.text)
+    user_agent = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.75 Safari/537.36'}
+    need_field = ['title', 'aid', 'view', 'danmaku', 'favorite', 'coin', 'like']
+    def __init__(self, aid):
+        self.url = video_url = 'https://api.bilibili.com/x/web-interface/view?aid={}'.format(aid)
+        self.response = requests.get(url=video_url, headers=self.user_agent)
+        self.response = self.response
+        self._info_dict = json.loads(self.response.text)
         self._data = self._info_dict.get('data')
 
     @property
@@ -63,6 +67,12 @@ class GVI(object):
         all_info = dict(v, **self._data.get('stat'))
         return all_info
 
+    def video_info_list(self):
+        res = []
+        for field in self.need_field:
+            res.append(self.video_info.get(field))
+        return res
+
     @property
     def author(self):
         a = {}
@@ -77,9 +87,11 @@ class GVI(object):
         #print(d_list)
         return d_list
 
-
-res_obj = GVI(res)
-print('信息', res_obj.video_info)
-print('类别', res_obj.video_type)
-print('作者',res_obj.author )
-print('标签', res_obj.dynamic_list)
+if __name__ == "__main__":
+    res_obj = GVI(42939742)
+    print('信息', res_obj.video_info)
+    print(res_obj.video_info_list(), res_obj.video_info_list()[0])
+    print(type(res_obj.video_info_list()[0]))
+    print('类别', res_obj.video_type)
+    print('作者',res_obj.author )
+    print('标签', res_obj.dynamic_list)
