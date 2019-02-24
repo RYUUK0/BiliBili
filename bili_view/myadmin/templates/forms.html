@@ -1,0 +1,33 @@
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <form action="" class="form-group" method="post">
+                    {% csrf_token %}
+                    {% for field in forms %}
+                        <div class="every-info" style="position: relative">
+                            <label  for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            <span class="pull-right">{{ field.errors.0 }}</span>
+                            {% if field.is_pop %}
+                                <a onclick="to_pop('{{ field.url }}')" class="a_pop" style="position: absolute; right: -20px; top: 25px;"><span style="font-size: 23px">+</span></a>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+
+                    <input type="submit" class="btn btn-danger" value="提交">
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <script src="/static/jquery-3.3.1.js"></script>
+    <script>
+        //为输入框添加form-control属性
+        $('.every-info > input, select').addClass('form-control')
+
+        //to_pop函数
+        function to_pop(url) {
+            window.open(url, "", "width = 600, height = 400, top = 100, left = 100 ")
+        }
+    </script>

@@ -1,0 +1,10 @@
+.select_form {
+    margin-bottom: 10px;
+    margin-left: 30px;
+    margin-top: 20px;
+}
+
+#actions_name {
+    height: 30px;
+    width: 125px;
+}

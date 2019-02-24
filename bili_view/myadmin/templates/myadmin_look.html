@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查询页面</title>
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/look_css.css">
+</head>
+<body>
+    <h1>这是查询页面</h1>
+
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-9">
+
+                <!--搜索框-->
+                {% if showlist.model_myadmin.search_fields %}
+                    <form action="" class="pull-right" >
+                    <input type="text" name="search_key" value="{{ showlist.model_myadmin.search_key }}">
+                    <button >搜索</button>
+                </form>
+                {% endif %}
+
+                <!--数据展示-->
+                <div>
+                    <!--数据操作框-->
+                    <form action="" class="select_form" method="post">
+                    {% csrf_token %}
+                    <select name="actions_name" id="actions_name">
+                        <option value="0">------------</option>
+                        {% for foo in showlist.get_actions %}
+                            <option value="{{ foo.name }}">{{ foo.desc }}</option>
+                        {% endfor %}
+
+                    </select>
+                    <input type="submit" class="btn btn-info">
+
+
+                    <!--查询得到的数据表格-->
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                {% for every in showlist.get_head %}
+                                    <th>{{ every }}</th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for every in showlist.page_obj.content %}
+                                <tr>
+                                    {% for detail in every %}
+                                        <td>{{ detail }}</td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    </form>
+                    <div><a href="{{ add_url }}"><button class="btn btn-default">添加用户</button></a></div>
+                    <!--分页组件-->
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            {% if showlist.page_obj.prev_page %}
+                                <li>
+                              <a href="?page={{ showlist.page_obj.prev }}{{ showlist.page_obj.get_url }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                              </a>
+                            </li>
+                            {% endif %}
+                            {% for num in showlist.page_obj.page_row %}
+                                <li><a href="?page={{ num }}{{ showlist.page_obj.get_url }}">{{ num }}</a></li>
+                            {% endfor %}
+                            {% if showlist.page_obj.next_page %}
+                                <li>
+                                    <a href="?page={{ showlist.page_obj.next }}{{ showlist.page_obj.get_url }}" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                      </ul>
+        </nav>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                {% for filter_name, filter_result in showlist.get_filter.items %}
+
+
+                    <div>{{ filter_name }}</div>
+                    <div>
+                    {% for filter in filter_result  %}
+                        {{ filter }}
+                    {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+
+
+        </div>
+
+
+    </div>
+    <script src="/static/jquery-3.3.1.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+        //如果点击表头表示全选
+        $('#queryset_select').click(function(){
+            //表示点击
+            if($(this).prop('checked')){
+                $('.select_item').prop('checked', true)
+            }
+            else{
+                $('.select_item').prop('checked', false)
+            }
+        })
+    </script>
+
+</body>
+</html>

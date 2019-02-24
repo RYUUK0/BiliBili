@@ -55,8 +55,8 @@ class GVI(object):
     def video_type(self):
     #视频类别字典
         t = {}
-        t['id'] = self._data.get('tid')
-        t['name'] = self._data.get('tname')
+        t['tid'] = self._data.get('tid')
+        t['tname'] = self._data.get('tname')
         return t
 
     @property
@@ -75,6 +75,7 @@ class GVI(object):
 
     @property
     def author(self):
+        #作者字典
         a = {}
         a['mid'] = self._data.get('owner').get('mid')
         a['name'] = self._data.get('owner').get('name')
@@ -82,13 +83,15 @@ class GVI(object):
 
     @property
     def dynamic_list(self):
+        #标签字典
         d_str = self._data.get('dynamic')
-        d_list = [i for i in d_str.split('#') if i]
+        #print(self._data)
+        d_list = [i for i in d_str.split('#') if i and len(i) < 10]
         #print(d_list)
         return d_list
 
 if __name__ == "__main__":
-    res_obj = GVI(42939742)
+    res_obj = GVI(27393595)
     print('信息', res_obj.video_info)
     print(res_obj.video_info_list(), res_obj.video_info_list()[0])
     print(type(res_obj.video_info_list()[0]))
