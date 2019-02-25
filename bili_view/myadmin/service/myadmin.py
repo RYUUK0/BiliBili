@@ -51,20 +51,22 @@ class ShowList:
             each_info = []
             for field in self.model_myadmin.display:
                 if isinstance(field, str):
-                    if field != '__str__':
-                    field_obj = self.model_myadmin.model._meta.get_field(field)
-                    if isinstance(field_obj, ManyToManyField):
-                        r = []
-                        for i in getattr(each, field).all():
-                            r.append(str(i))
-                        res = ",".join(r)
-
+                    if field == '__str__':
+                        res = each.__str__()
                     else:
-                        #利用反射得到该属性的值
-                        res = getattr(each, field)
-                        if field in self.model_myadmin.display_links:
-                            res_url = reverse(self.model_myadmin.change_url_name, args = (each.id, ))
-                            res = mark_safe('<a href="%s">%s</a>'%(res_url, res))
+                        field_obj = self.model_myadmin.model._meta.get_field(field)
+                        if isinstance(field_obj, ManyToManyField):
+                            r = []
+                            for i in getattr(each, field).all():
+                                r.append(str(i))
+                            res = ",".join(r)
+
+                        else:
+                            #利用反射得到该属性的值
+                            res = getattr(each, field)
+                            if field in self.model_myadmin.display_links:
+                                res_url = reverse(self.model_myadmin.change_url_name, args = (each.id, ))
+                                res = mark_safe('<a href="%s">%s</a>'%(res_url, res))
                 else:
                     res = field(self.model_myadmin, each)
                 #添加到个人信息列表
