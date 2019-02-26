@@ -7,20 +7,27 @@
     <link rel="stylesheet" href="/static/look_css.css">
 </head>
 <body>
-    <h1>这是查询页面</h1>
 
+    <div class="show_head">
+        <div class="head_title">B站数据查看页面</div>
+    </div>
 
-    <div class="container">
+    <div class="show_body">
+        <div class="left_modellist">
+            <div class="model_list"><a href="">模型表一</a></div>
+        </div>
+        <div class="right_showdata">
+            <div class="container">
         <div class="row">
 
             <div class="col-lg-9">
 
                 <!--搜索框-->
                 {% if showlist.model_myadmin.search_fields %}
-                    <form action="" class="pull-right" >
+                    <form action="" class="pull-right search-input" >
                     <input type="text" name="search_key" value="{{ showlist.model_myadmin.search_key }}">
                     <button >搜索</button>
-                </form>
+                    </form>
                 {% endif %}
 
                 <!--数据展示-->
@@ -28,14 +35,16 @@
                     <!--数据操作框-->
                     <form action="" class="select_form" method="post">
                     {% csrf_token %}
-                    <select name="actions_name" id="actions_name">
-                        <option value="0">------------</option>
-                        {% for foo in showlist.get_actions %}
-                            <option value="{{ foo.name }}">{{ foo.desc }}</option>
-                        {% endfor %}
+                        {% if showlist.get_actions %}
+                            <select name="actions_name" id="actions_name">
+                                <option value="0">------------</option>
+                                {% for foo in showlist.get_actions %}
+                                    <option value="{{ foo.name }}">{{ foo.desc }}</option>
+                                {% endfor %}
+                            </select>
 
-                    </select>
-                    <input type="submit" class="btn btn-info">
+                            <input type="submit" class="btn btn-info">
+                        {% endif %}
 
 
                     <!--查询得到的数据表格-->
@@ -58,16 +67,16 @@
                         </tbody>
                     </table>
                     </form>
-                    <div><a href="{{ add_url }}"><button class="btn btn-default">添加用户</button></a></div>
+
                     <!--分页组件-->
-                    <nav aria-label="Page navigation">
+                    <nav aria-label="Page navigation" class="page-area">
                         <ul class="pagination">
                             {% if showlist.page_obj.prev_page %}
                                 <li>
-                              <a href="?page={{ showlist.page_obj.prev }}{{ showlist.page_obj.get_url }}" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                              </a>
-                            </li>
+                                    <a href="?page={{ showlist.page_obj.prev }}{{ showlist.page_obj.get_url }}" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
                             {% endif %}
                             {% for num in showlist.page_obj.page_row %}
                                 <li><a href="?page={{ num }}{{ showlist.page_obj.get_url }}">{{ num }}</a></li>
@@ -79,28 +88,30 @@
                                     </a>
                                 </li>
                             {% endif %}
-                      </ul>
-        </nav>
+                        </ul>
+                    </nav>
+
+                    <div><a href="{{ add_url }}"><button class="btn btn-default">添加数据</button></a></div>
                 </div>
             </div>
 
-            <div class="col-lg-3">
+            <div class="col-lg-2">
                 {% for filter_name, filter_result in showlist.get_filter.items %}
-
-
-                    <div>{{ filter_name }}</div>
-                    <div>
+                <ul class="list-group">
+                    <li class="list-group-item">{{filter_name}}</li>
+                    <li class="list-group-item">
                     {% for filter in filter_result  %}
                         {{ filter }}
                     {% endfor %}
-                    </div>
+                    </li>
+                </ul>
                 {% endfor %}
             </div>
-
-
         </div>
 
 
+    </div>
+        </div>
     </div>
     <script src="/static/jquery-3.3.1.js"></script>
     <script src="/static/bootstrap/js/bootstrap.min.js"></script>

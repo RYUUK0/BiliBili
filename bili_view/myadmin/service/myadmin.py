@@ -23,7 +23,7 @@ class ShowList:
         self.data = data_list
         self.request = html_request
         self.base_url = html_request.path
-        self.page_obj = MyPage(self.request.GET.get('page'), 1, self.get_body(), self.request.GET)
+        self.page_obj = MyPage(self.request.GET.get('page'), 10, self.get_body(), self.request.GET)
         self.actions = model_myadmin.actions
         self.filters = model_myadmin.filter_list
 
@@ -200,9 +200,7 @@ class ModelMyadmin(object):
                 if filter_name in self.filter_list:
                     #print('筛选条件>>>>', filter_name, filter_val)
                     #print('类型》》》》》》', type(filter_name), type(filter_val))
-
                     filter_obj.children.append((filter_name, filter_val))
-
             data = data.filter(filter_obj)
 
         return data
