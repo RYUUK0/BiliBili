@@ -38,6 +38,9 @@ class ShowList:
                     #得到相应的字段对象,获得verbose_name
                     field_obj = self.model_myadmin.model._meta.get_field(detail)
                     field_name = field_obj.verbose_name
+                    if detail in self.model_myadmin.sort_list:
+                        field_name = mark_safe("<a href='?sort_field=%s'>%s</a>"%(detail, field_name))
+
             else:
                 field_name = detail(self.model_myadmin, obj = None, is_head = True)
             head_data.append(field_name)
@@ -117,6 +120,15 @@ class ShowList:
 
         return all_filter_dict
 
+    def get_modeldict(self):
+        model_dict = {}
+        #print(type(self.model_myadmin.site._registry))
+        for model, model_admin in self.model_myadmin.site._registry.items():
+            model_name = model_admin.model_name
+            model_url = reverse(model_admin.look_url_name)
+            model_dict[model_name] = model_url
+
+        return model_dict
 
 
 #单个模型表的配置类
@@ -148,9 +160,11 @@ class ModelMyadmin(object):
     #默认可被所搜的字段
     search_fields = []
     #操作列表
-    actions = [act_update, ]
+    actions = []
     #用于筛选的字段列表
     filter_list = []
+    #默认用于排序的字段
+    sort_list = []
 
     def __init__(self, model, site):
         self.model = model
@@ -205,14 +219,30 @@ class ModelMyadmin(object):
 
         return data
 
+    def field_sort(self, data):
+        clean_data = data.all().order_by('-' + self.sort_field)
+        return clean_data
 
     #对应的增删改查视图函数
     def look(self, request):
         #首先得到查询条件,在查询结果
         search_key = request.GET.get('search_key', "")
         self.search_key = search_key
-        search_data = self.search()
-        search_data = self.filter(request, search_data)
+        #执行搜索
+        clean_data = self.search()
+
+        #执行筛选
+        clean_data = self.filter(request, clean_data)
+
+        #执行排序
+        sort_field = request.GET.get('sort_field', "")
+        self.sort_field = sort_field
+        if self.sort_field:
+            print(self.sort_field)
+            clean_data = self.field_sort(clean_data)
+
+
+
 
         #批量操作用POST传数据
         if request.method == "POST":
@@ -225,7 +255,7 @@ class ModelMyadmin(object):
                 func(queryset_list)
 
         #定制一个展示页面类
-        showlist = ShowList(self, request, data_list = search_data)
+        showlist = ShowList(self, request, data_list = clean_data)
         add_url = reverse(self.add_url_name)
 
         return render(request, 'myadmin_look.html', locals())

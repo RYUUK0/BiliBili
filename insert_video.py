@@ -89,7 +89,7 @@ class ISVI(object):
 
 
 if __name__ == '__main__':
-    av_num = 27393595
+    av_num = 25474079
     video_data = GVI(aid=av_num)
 
     obj = ISVI(gvi_obj = video_data)

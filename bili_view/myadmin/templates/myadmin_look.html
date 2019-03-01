@@ -14,7 +14,9 @@
 
     <div class="show_body">
         <div class="left_modellist">
-            <div class="model_list"><a href="">模型表一</a></div>
+            {% for model_name, model_url in showlist.get_modeldict.items %}
+            <div class="model_list"><a href="{{ model_url }}">{{ model_name }}</a></div>
+            {% endfor %}
         </div>
         <div class="right_showdata">
             <div class="container">
@@ -97,13 +99,13 @@
 
             <div class="col-lg-2">
                 {% for filter_name, filter_result in showlist.get_filter.items %}
-                <ul class="list-group">
+                <ul class="list-group tag_area">
                     <li class="list-group-item">{{filter_name}}</li>
-                    <li class="list-group-item">
                     {% for filter in filter_result  %}
+                    <li class="list-group-item" >
                         {{ filter }}
-                    {% endfor %}
                     </li>
+                    {% endfor %}
                 </ul>
                 {% endfor %}
             </div>

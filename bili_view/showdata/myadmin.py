@@ -6,10 +6,21 @@ from django.urls import reverse
 
 
 class VideoConfig(myadmin.ModelMyadmin):
-    display = ['title', 'views', 'coin', 'danmaku']
+
+    def jump_link(self, obj, is_head = False):
+        if is_head:
+            return '操作'
+        _url = 'https://www.bilibili.com/%s'%('av' + str(obj.aid))
+        res = "<a href='%s'target='_blank'>%s</a>"%(_url, '跳转')
+        return mark_safe(res)
+
+    display = ['title', 'views', 'coin', 'danmaku', jump_link]
     filter_list = ['author', 'tag']
     actions = []
     search_fields = ['title', 'aid']
+    sort_list = ['views', 'coin', 'danmaku']
+
+
 
 
 

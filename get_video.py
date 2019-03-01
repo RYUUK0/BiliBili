@@ -49,22 +49,22 @@ class GVI(object):
         self.response = requests.get(url=video_url, headers=self.user_agent)
         self.response = self.response
         self._info_dict = json.loads(self.response.text)
-        self._data = self._info_dict.get('data')
+        self.data = self._info_dict.get('data')
 
     @property
     def video_type(self):
     #视频类别字典
         t = {}
-        t['tid'] = self._data.get('tid')
-        t['tname'] = self._data.get('tname')
+        t['tid'] = self.data.get('tid')
+        t['tname'] = self.data.get('tname')
         return t
 
     @property
     def video_info(self):
         #视频信息字典
         v = {}
-        v['title'] = self._data.get('title')
-        all_info = dict(v, **self._data.get('stat'))
+        v['title'] = self.data.get('title')
+        all_info = dict(v, **self.data.get('stat'))
         return all_info
 
     def video_info_list(self):
@@ -77,24 +77,28 @@ class GVI(object):
     def author(self):
         #作者字典
         a = {}
-        a['mid'] = self._data.get('owner').get('mid')
-        a['name'] = self._data.get('owner').get('name')
+        a['mid'] = self.data.get('owner').get('mid')
+        a['name'] = self.data.get('owner').get('name')
         return a
 
     @property
     def dynamic_list(self):
         #标签字典
-        d_str = self._data.get('dynamic')
+        d_str = self.data.get('dynamic')
         #print(self._data)
         d_list = [i for i in d_str.split('#') if i and len(i) < 10]
         #print(d_list)
         return d_list
 
 if __name__ == "__main__":
-    res_obj = GVI(27393595)
-    print('信息', res_obj.video_info)
-    print(res_obj.video_info_list(), res_obj.video_info_list()[0])
-    print(type(res_obj.video_info_list()[0]))
-    print('类别', res_obj.video_type)
-    print('作者',res_obj.author )
-    print('标签', res_obj.dynamic_list)
+    res_obj = GVI(1)
+    print(res_obj.data)
+    if res_obj.data:
+        print('信息', res_obj.video_info)
+        print(res_obj.video_info_list(), res_obj.video_info_list()[0])
+        print(type(res_obj.video_info_list()[0]))
+        print('类别', res_obj.video_type)
+        print('作者',res_obj.author )
+        print('标签', res_obj.dynamic_list)
+    else:
+        print('视频不见了')
