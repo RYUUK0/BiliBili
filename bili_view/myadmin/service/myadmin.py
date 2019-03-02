@@ -13,17 +13,17 @@ from django.core.handlers.wsgi import WSGIRequest
 
 #获得数据表单的类
 class ShowList:
-    def __init__(self,model_myadmin, html_request,data_list):
+    def __init__(self,model_myadmin, html_request, data_obj):
         """
         :param model_myadmin: 传入的数据表配置类
         :param html_request: html请求
         :param data_list: 需要展示的数据
         """
         self.model_myadmin = model_myadmin
-        self.data = data_list
+        self.data = data_obj
         self.request = html_request
         self.base_url = html_request.path
-        self.page_obj = MyPage(self.request.GET.get('page'), 10, self.get_body(), self.request.GET)
+        #self.page_obj = MyPage(self.request.GET.get('page'), 10, self.get_body(), self.request.GET)
         self.actions = model_myadmin.actions
         self.filters = model_myadmin.filter_list
 
@@ -49,7 +49,7 @@ class ShowList:
     #表单body数据
     def get_body(self):
         body_data = []
-        for each in self.data:
+        for each in self.data.content:
             #循环字段列表,创建个人信息的列表
             each_info = []
             for field in self.model_myadmin.display:
@@ -60,7 +60,7 @@ class ShowList:
                         field_obj = self.model_myadmin.model._meta.get_field(field)
                         if isinstance(field_obj, ManyToManyField):
                             r = []
-                            for i in getattr(each, field).all():
+                            for i in getattr(each, field).all()[: 8]:
                                 r.append(str(i))
                             res = ",".join(r)
 
@@ -102,7 +102,7 @@ class ShowList:
             the_all = mark_safe("<a href='?%s'>全部</a>"%_url)
             filter_list.append(the_all)
             if isinstance(field_obj, ManyToManyField) or isinstance(field_obj, ForeignKey):
-                for row in field_obj.related_model.objects.all():
+                for row in field_obj.related_model.objects.all()[: 5]:
                     parms[field] = row.pk
                     _url = parms.urlencode()
                     res = mark_safe('<a href="?%s">%s</a>'%(_url, str(row)))
@@ -110,7 +110,7 @@ class ShowList:
 
             #field_boj为普通字段
             else:
-                for row in self.model_myadmin.model.objects.all():
+                for row in self.model_myadmin.model.objects.all()[self.data.start: self.data.end]:
                     name = getattr(row, field)
                     parms[field] = name
                     _url = parms.urlencode()
@@ -253,9 +253,13 @@ class ModelMyadmin(object):
                 queryset_list = self.model.objects.filter(pk__in = pk_list)
                 func = getattr(self, action_name)
                 func(queryset_list)
+        length = len(clean_data)
+        print('type is ............', type(clean_data))
+        data_obj = MyPage(request.GET.get('page'), 10, clean_data, length, get_dict = request.GET)
 
+        print(type(data_obj.content))
         #定制一个展示页面类
-        showlist = ShowList(self, request, data_list = clean_data)
+        showlist = ShowList(self, request, data_obj = data_obj)
         add_url = reverse(self.add_url_name)
 
         return render(request, 'myadmin_look.html', locals())
@@ -287,7 +291,7 @@ class ModelMyadmin(object):
     def change(self, request, change_id):
         #print('访问数据对象:', self.model)
         modelform = self.get_modelform()
-        change_obj = self.model.objects.filter(id = change_id).first()
+        change_obj = self.model.objects.filter(pk = change_id).first()
         forms = modelform(instance = change_obj)
         if request.method == 'POST':
             forms = modelform(request.POST, instance = change_obj)

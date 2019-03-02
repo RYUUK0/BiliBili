@@ -23,6 +23,8 @@ class ISVI(object):
     search_author = "select mid from showdata_author where mid=%s"
     search_tag = "select id from showdata_tag where name=%s"
 
+    update_video = "update showdata_video set views=%s,danmaku=%s,favourit=%s,coin,likes=%s"
+
     def __init__(self, gvi_obj):
         self._conn = pymysql.connect(
             port = self.port,
@@ -58,6 +60,15 @@ class ISVI(object):
             else:
                 print('##%s##标签已存在', dynamic)
 
+    def _update_video(self):
+        update_info  = []
+        update_field = ['view','danmaku','favourit','coin','like']
+        for field in update_field:
+            value = self.gvi.video_info.get(field)
+            update_info.append(value)
+        self._cur.execute(self.update_video, update_info)
+        self._conn.commit()
+
     def insert_all(self):
         try:
             res = self._cur.execute(self.search_info, self.gvi.video_info.get('aid'))
@@ -77,6 +88,8 @@ class ISVI(object):
                     self._cur.execute(self.add_video_tag, [video_id, tag_id])
                 self._conn.commit()
             else:
+
+                print('更新视频信息')
                 print('视频信息已存在')
             return True
         except Exception as e:

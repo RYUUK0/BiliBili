@@ -59,7 +59,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for every in showlist.page_obj.content %}
+                            {% for every in showlist.get_body %}
                                 <tr>
                                     {% for detail in every %}
                                         <td>{{ detail }}</td>
@@ -73,19 +73,19 @@
                     <!--分页组件-->
                     <nav aria-label="Page navigation" class="page-area">
                         <ul class="pagination">
-                            {% if showlist.page_obj.prev_page %}
+                            {% if showlist.data.prev_page %}
                                 <li>
-                                    <a href="?page={{ showlist.page_obj.prev }}{{ showlist.page_obj.get_url }}" aria-label="Previous">
+                                    <a href="?page={{ showlist.data.prev }}{{ showlist.data.get_url }}" aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </li>
                             {% endif %}
-                            {% for num in showlist.page_obj.page_row %}
-                                <li><a href="?page={{ num }}{{ showlist.page_obj.get_url }}">{{ num }}</a></li>
+                            {% for num in showlist.data.page_row %}
+                                <li><a href="?page={{ num }}{{ showlist.data.get_url }}">{{ num }}</a></li>
                             {% endfor %}
-                            {% if showlist.page_obj.next_page %}
+                            {% if showlist.data.next_page %}
                                 <li>
-                                    <a href="?page={{ showlist.page_obj.next }}{{ showlist.page_obj.get_url }}" aria-label="Next">
+                                    <a href="?page={{ showlist.data.next }}{{ showlist.data.get_url }}" aria-label="Next">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
                                 </li>

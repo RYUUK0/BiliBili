@@ -3,7 +3,7 @@ import copy
 
 #制定一个自定义分页类
 class MyPage(object):
-    def __init__(self, page_num, page_count, data_list, get_dict = None):
+    def __init__(self, page_num, page_count, data_list, data_length, get_dict = None ):
         """
         :param page_num: 输入的页码
         :param page_count: 每页的数据条数
@@ -16,7 +16,7 @@ class MyPage(object):
         except Exception as e:
             self.page_num = 1
         self.page_count = page_count
-        self.all_count = len(data_list)
+        self.all_count = data_length
         self.data_list = data_list
 
         #求出页码最大边界max_page
@@ -60,12 +60,15 @@ class MyPage(object):
             return False
 
     #得出开始和结束的数据条数
+    @property
     def start(self):
         return (self.page_num - 1) * self.page_count
 
+    @property
     def end(self):
         return (self.page_num) * self.page_count
 
     #获取页面内容
+    @property
     def content(self):
-        return self.data_list[self.start(): self.end()]
+        return self.data_list[self.start: self.end]

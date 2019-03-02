@@ -91,8 +91,8 @@ class GVI(object):
         return d_list
 
 if __name__ == "__main__":
-    res_obj = GVI(1)
-    print(res_obj.data)
+    res_obj = GVI(35987154)
+    #print(res_obj.data)
     if res_obj.data:
         print('信息', res_obj.video_info)
         print(res_obj.video_info_list(), res_obj.video_info_list()[0])
