@@ -4,13 +4,15 @@ from requests.models import Response
 from bs4.element import Tag
 from bs4.element import Comment
 import re
+import json
 
 
-index_url = 'https://www.bilibili.com/'
-game_url = 'https://www.bilibili.com/v/game/'
-index_res = requests.get(
-    url = index_url
-)
+
+# index_url = 'https://www.bilibili.com/'
+# game_url = 'https://www.bilibili.com/v/game/'
+# index_res = requests.get(
+#     url = index_url
+# )
 #B站首页信息
 #print(type(res))
 
@@ -39,7 +41,7 @@ index_res = requests.get(
 
 #直接获取primary_menu的所有连接
 #分类信息由网页静态加载，可直接爬取
-clean_data = BeautifulSoup(index_res.text, 'html.parser')
+# clean_data = BeautifulSoup(index_res.text, 'html.parser')
 #a_list = clean_data.find(name = 'div', attrs = {'id': 'primary_menu'}).find_all(name = 'a')
 #url_list = []
 # for a_tag in a_list:
@@ -70,3 +72,31 @@ clean_data = BeautifulSoup(index_res.text, 'html.parser')
 # game_data = BeautifulSoup(game_res.text, 'html.parser')
 # new = game_data.find(name = 'div', attrs = {'class' : 'spread-module'})
 # print(game_data)
+
+url = 'https://www.bilibili.com/video/av43715216'
+user_agent = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.75 Safari/537.36'}
+res= requests.get(url, headers = user_agent)
+res.encoding = 'utf8'
+judge = r"window\.__playinfo__=(.*?)</script>"
+
+#print(res.text)
+xxx = re.findall(judge, res.text)[0]
+print(type(xxx))
+#获取信息字典
+json_xxx = json.loads(xxx)
+# print(json_xxx)
+# print(type(json_xxx))
+print('############################################')
+#视频地址
+#print(json_xxx['data'])
+the_video_url = json_xxx['data']['dash']['video']
+print(the_video_url)
+print(type(the_video_url))
+
+def download(url):
+    pass
+
+
+
+
+

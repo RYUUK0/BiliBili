@@ -36,9 +36,11 @@ def start(begin, end):
         raise TypeError('参数类型必须是int')
 
 if __name__ == '__main__':
+    a = input('开始ID为', )
+    b = input('结束ID为', )
     try:
         one = time.time()
-        start(20000000, 45000000)
+        start(a, b)
         print('完成时间为', time.time() - one)
     except TypeError as e :
         print(e)
