@@ -24,10 +24,10 @@ def get_and_insert(aid):
         obj = ISVI(gvi_obj=video_data)
         res = obj.insert_all()
 
-def start(begin, end):
+def run(begin, end):
     if isinstance(begin, int) and isinstance(end, int):
         if end > begin and begin > 0:
-            pool = Pool(20)
+            pool = Pool(30)
             for aid in range(begin, end):
                 pool.spawn(get_and_insert, aid)
         else:
@@ -36,11 +36,13 @@ def start(begin, end):
         raise TypeError('参数类型必须是int')
 
 if __name__ == '__main__':
-    a = input('开始ID为', )
-    b = input('结束ID为', )
+    # a = input('开始ID为', )
+    # b = input('结束ID为', )
     try:
+        a = 35049834
+        b = 35893495
         one = time.time()
-        start(a, b)
+        run(a, b)
         print('完成时间为', time.time() - one)
     except TypeError as e :
         print(e)

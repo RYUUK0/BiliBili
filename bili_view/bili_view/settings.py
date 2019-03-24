@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'myadmin.apps.MyadminConfig',
     'showdata.apps.ShowdataConfig',
+    'logres.apps.LogresConfig',
 ]
 
 MIDDLEWARE = [

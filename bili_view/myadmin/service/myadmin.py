@@ -150,7 +150,7 @@ class ModelMyadmin(object):
         return mark_safe(res)
     #批量操作
     def act_update(self, queryset):
-        print(1111)
+        pass
     act_update.desc = act_update.__name__
     #默认显示字段列表
     display = [
