@@ -1,5 +1,5 @@
 import pymysql
-from get_video import GVI
+
 
 
 #insert_sql_video_info
@@ -102,6 +102,7 @@ class ISVI(object):
 
 
 if __name__ == '__main__':
+    from get_video import GVI
     av_num = 25474079
     video_data = GVI(aid=av_num)
 

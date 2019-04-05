@@ -104,4 +104,6 @@ venv.bak/
 .mypy_cache/
 
 # ÅäÖÃÎÄ¼ş
-.idea
+*.idea
+
+*.iml

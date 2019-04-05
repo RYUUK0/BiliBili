@@ -20,5 +20,6 @@ from django.urls import path, re_path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    re_path('myadmin/', myadmin.site.urls)
+    re_path('^$', myadmin.site.index),
+    re_path('myadmin/', myadmin.site.urls),
 ]

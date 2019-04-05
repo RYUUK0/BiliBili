@@ -14,9 +14,15 @@
 
     <div class="show_body">
         <div class="left_modellist">
-            {% for model_name, model_url in showlist.get_modeldict.items %}
-            <div class="model_list"><a href="{{ model_url }}">{{ model_name }}</a></div>
-            {% endfor %}
+            {% if showlist %}
+                {% for model_name, model_url in showlist.get_modeldict.items %}
+                <div class="model_list"><a href="{{ model_url }}">{{ model_name }}</a></div>
+                {% endfor %}
+            {% else %}
+                {% for model_name, model_url in url_dict.items %}
+                <div class="model_list"><a href="{{ model_url }}">{{ model_name }}</a></div>
+                {% endfor %}
+            {% endif %}}
         </div>
         <div class="right_showdata">
             <div class="container">

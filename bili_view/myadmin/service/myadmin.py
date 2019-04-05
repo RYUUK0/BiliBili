@@ -338,4 +338,14 @@ class MyadminSite(object):
     def urls(self):
         return (self.get_urls(), None, None)
 
+    def index(self, request):
+        url_dict = {}
+        print(self._registry)
+        for model, model_admin in self._registry.items():
+            model_name = model._meta.model_name
+            app_name = model._meta.app_label
+            url_dict[model_name] = r'myadmin/{0}/{1}/'.format(app_name, model_name)
+        print(url_dict)
+        return render(request, 'myadmin_look.html', {'url_dict': url_dict})
+
 site = MyadminSite()
