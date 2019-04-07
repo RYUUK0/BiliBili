@@ -1,0 +1,56 @@
+/*头部样式*/
+.head {
+    background-color: rgb(35, 38, 56);
+    width: 100%;
+    height: 70px;
+    line-height: 70px
+}
+#head_logo {
+    wight: 50px;
+    height: 50px;
+    margin-left: 30px;
+}
+.user-func {
+    position: absolute;
+
+    top: 0px;
+    right: 10px;
+
+}
+.func_item {
+    float: left;
+    margin: auto 30px;
+    font-size: 20px;
+
+}
+
+
+
+/*下方显示区样式*/
+.view_body {
+    background: url('/static/img/picture_body.png'), #122b40;
+    background-size: cover;
+    height: 564px;
+}
+.logo_res {
+    height: 100%;
+    padding-right: 120px;
+    padding-left: 120px;
+}
+.logo_area {
+    margin-top: 150px;
+    float: left;
+}
+#body_logo {
+    height: 180px;
+    width: 530px;
+
+
+}
+.res_area {
+    background: white;
+    width: 480px;
+    display: flex;
+    float: right;
+    margin: 50px 20px 20px 20px;
+}
