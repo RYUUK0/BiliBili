@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block css_link %}
+    <link rel="stylesheet" href="/static/user_setting.css">
+{% endblock %}
+
+
+{% block body %}
+    <form id="set_area_list">
+        {% csrf_token %}
+        <div class="set_area">
+            <div class="change_info">
+                <div class="change_name"><a onclick="display_name()">修改</a></div>
+                用户名
+            </div>
+            <div class="old_info" id="old_name">
+                <div class="old_name">{{ request.userinfo.username }}</div>
+                <span>你的用户名</span>
+            </div>
+            <div class="edit_info hide" id="change_name">
+                <label id="label_user" for="new_username">新的用户名:</label>
+                <input type="text" class="new_info" id="new_username">
+                <div class="old_name" style="font-weight: 700">{{ request.userinfo.username }}</div>
+                <div class="put_button">
+                    <input type="button" value="保存" onclick="send_name()">
+                    <input type="button" value="取消" onclick="display_name()">
+                </div>
+            </div>
+
+        </div>
+        <div class="set_area">
+            <div class="change_info">
+                <div class="change_name"><a onclick="display_password()">修改</a></div>
+                密码
+            </div>
+            <div class="old_info" id="old_password">
+                <div class="old_name">********</div>
+                <span>你的密码</span>
+            </div>
+            <div class="edit_info hide" id="change_password">
+                <div style="margin-bottom: 3px;">
+                    <label id="label_user" for="input_old_password">旧密码:</label>
+                    <input type="text" class="new_info" id="input_old_password">
+                </div>
+                <div style="margin-bottom: 3px;">
+                    <label id="label_user" for="input_new_password">新密码:</label>
+                    <input type="text" class="new_info" id="input_new_password">
+                </div>
+                <div style="margin-bottom: 3px;" >
+                <label id="label_user" for="input_re_password">确认密码:</label>
+                <input type="text" class="new_info" id="input_re_password">
+                </div>
+                <div class="old_name" style="font-weight: 700">********</div>
+                <div class="put_button">
+                    <input type="button" value="保存" onclick="send_password()">
+                    <input type="button" value="取消" onclick="display_password()">
+                </div>
+            </div>
+
+        </div>
+        <div class="set_area">
+            <div class="change_info">
+                <div class="change_name"><a onclick="display_phone()">修改</a></div>
+                电话
+            </div>
+            <div class="old_info" id="old_phone">
+                <div class="old_name">{{ request.userinfo.phone }}</div>
+                <span>电话</span>
+            </div>
+            <div class="edit_info hide" id="change_phone">
+                <label id="label_user" for="new_phone">新电话:</label>
+                <input type="text" class="new_info" id="new_phone">
+                <div class="old_name" style="font-weight: 700">{{ request.userinfo.email }}</div>
+                <div class="put_button">
+                    <input type="button" value="保存" onclick="send_phone()">
+                    <input type="button" value="取消" onclick="display_phone()">
+                </div>
+            </div>
+
+        </div>
+
+    </form>
+{% endblock %}
+
+
+{% block script %}
+    <script>
+        var csrf_val = $("input[name='csrfmiddlewaretoken']").val();
+        var send_data = {};
+        var input_data = {}
+        send_data['csrfmiddlewaretoken'] = csrf_val;
+        //显示输入框函数
+        function display_name() {
+            $("#change_name").toggleClass("hide");
+            $("#old_name").toggleClass("hide");
+        }
+        function display_password() {
+            $("#change_password").toggleClass("hide");
+            $("#old_password").toggleClass("hide");
+        }
+        function display_phone() {
+            $("#change_phone").toggleClass("hide");
+            $("#old_phone").toggleClass("hide");
+        }
+        //发送数据
+        function send_name() {
+            var new_username = $('input#new_username').val();
+            console.log(new_username);
+            input_data['new_username'] = new_username;
+            send_data['change'] = 'name';
+            gogogo();
+        }
+        function send_password() {
+            var old_password = $('input#input_old_password').val();
+            var new_password = $('input#input_new_password').val();
+            var re_password = $('input#input_re_password').val();
+            console.log(old_password, new_password, re_password);
+            input_data['old_password'] = old_password;
+            input_data['new_password'] = new_password;
+            input_data['re_password'] = re_password;
+            send_data['change'] = 'password';
+            gogogo();
+        }
+        function send_phone() {
+            var new_phone = $('input#new_phone').val();
+            console.log(new_phone);
+            input_data['new_phone'] = new_phone;
+            send_data['change'] = 'phone';
+            gogogo();
+        }
+        function gogogo() {
+            input_data['user_id'] = {{ request.userinfo.pk }}
+            send_data['data'] = JSON.stringify(input_data);
+            console.log(send_data);
+            $.ajax({
+                url: '/settings/',
+                type: 'POST',
+                data: send_data,
+                success: function(data) {
+                    var data = JSON.parse(data);
+                    console.log(data);
+                    if (data.success) {
+                        location.href = '/index/';
+                    }
+                    else {
+                        $.each(data.reason, function(k, v) {
+                            alert(v[0]);
+                        });
+                    }
+                }
+            })
+        }
+    </script>
+{% endblock %}

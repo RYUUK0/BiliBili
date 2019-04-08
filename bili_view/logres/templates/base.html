@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>呵呵</title>
+
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/index.css">
+    {% block css_link %}
+    {% endblock %}
+</head>
+<body>
+    <!--头部分-->
+    <div class="head">
+        <div class="logo">
+            <a href="/index/"><img id="head_logo" src="/static/img/head.png"></a>
+        </div>
+        <div class="user-func">
+
+            {% if request.userinfo %}
+                <span class="func_item"><a href="/settings/">设置</a></span>
+                <span class="func_item"><a href="/logoff/">注销</a></span>
+
+            {% else %}
+                <span class="func_item"><a href="/register/">注册</a></span>
+                <span class="func_item"><a href="/login/">登录</a></span>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="view_body">
+        <div class="logo_res">
+            <div class="logo_area">
+                <img id="body_logo" src="/static/img/background.png">
+            </div>
+            {%  block body %}
+            {% endblock %}
+        </div>
+    </div>
+
+
+    <script src="/static/jquery-3.3.1.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    {% block script %}
+    {% endblock %}
+</body>
+</html>

@@ -21,7 +21,8 @@ from django.conf import settings
 
 
 urlpatterns = [
-    re_path('^$', views.index),
+    re_path('^$', views.register),
+    re_path(r'index/', views.index),
     #登录
     re_path('^login/$', views.login),
     #注册
@@ -35,7 +36,7 @@ urlpatterns = [
     re_path('myadmin/', myadmin.site.urls),
 
     #处理极验滑动验证码的视图函数
-    re_path(r'^pc-geetest/register', views.get_ge etest),
+    re_path(r'^pc-geetest/register', views.get_geetest),
     #media相关的路由设置
     re_path(r'^media/(?P<path>.*)$', serve, {"document_root": settings.MEDIA_ROOT})
 ]

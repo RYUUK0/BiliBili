@@ -9,9 +9,10 @@ class UserInfo(models.Model):
     create_time: 创建用户时间
     """
     username = models.CharField(max_length = 25, null = True, unique = True)
+    password = models.CharField(max_length = 30, null = True)
     phone = models.CharField(max_length=11, null=True, unique=True)
     create_time = models.DateTimeField(auto_now_add = True)
-    status = models.IntegerField(choices = ((0, '已删除'), (1, '待激活'), (2, '正常')))
+    status = models.IntegerField(choices = ((0, '已删除'), (1, '待激活'), (2, '正常')), default = 1)
     avator = models.FileField(upload_to = "avators_pic/", default = "avators_pic/111.png", verbose_name = '头像')
 
     def __str__(self):

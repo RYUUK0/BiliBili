@@ -1,0 +1,66 @@
+/*遮罩层*/
+.hide {
+    display: None;
+}
+
+
+/*设置区样式*/
+#set_area_list {
+
+    padding: 10px;
+    background: lightyellow;
+    border-radius: 10px;
+    float: right;
+    margin: 50px 20px 20px 20px;
+}
+
+.set_area {
+
+    width: 500px;
+    margin-bottom: 25px;
+    font-size: 15px;
+
+
+}
+/*需要改变信息*/
+.change_name {
+    float: right;
+    margin-right: 20px;
+}
+.change_info {
+    padding-top: 5px;
+    padding-left: 20px;
+    padding-bottom: 10px;
+    height: 50%;
+    border-bottom: solid 1px black;
+}
+/*原来信息*/
+.old_info {
+    padding-left: 20px;
+    font-weight: 700;
+    padding-top: 10px;
+}
+.old_name {
+    float: right;
+    margin-right:20px;
+}
+
+.edit_info {
+    padding-top: 10px;
+}
+/*编辑对话框*/
+.new_info {
+
+    height: 18px;
+    line-height: 18px;
+}
+
+/*按钮样式*/
+.put_button {
+    margin-top: 5px;
+    padding-left: 20px;
+}
+#label_user {
+    margin-bottom: 0px;
+    padding-left: 20px;
+}

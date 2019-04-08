@@ -169,15 +169,11 @@ class Set_Password(forms.Form):
         else:
             return self.cleaned_data
 
-class Set_Email(forms.Form):
+class Set_Phone(forms.Form):
     user_id = forms.IntegerField(required=True)
-    new_email = forms.CharField(required = True,
-                               max_length = 30,
-                               min_length = 5,
+    new_phone = forms.IntegerField(required = True,
                                error_messages = {
-                                   'required': '请输入新邮箱地址',
-                                   'min_length': '最小长度为5',
-                                   'max_length': '最大长度为20',
+                                   'required': '请输入新phone',
                                })
 
 
@@ -210,10 +206,10 @@ class Clean_Set():
             else:
                 self.errors = check.errors
 
-        elif self.change == 'email':
-            check = Set_Email(self.data)
+        elif self.change == 'phone':
+            check = Set_Phone(self.data)
             if check.is_valid() and self.user_obj:
-                self.user_obj.update(email = check.cleaned_data['new_email'])
+                self.user_obj.update(phone = check.cleaned_data['new_phone'])
                 return True
             else:
                 self.errors = check.errors

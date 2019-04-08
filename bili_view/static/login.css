@@ -1,0 +1,20 @@
+/*登录页面的自定义样式*/
+.login-form {
+    margin-top: 50px;
+}
+.login-error {
+    color: red;
+}
+.valid-img {
+    height: 35px;
+    width: 220px;
+}
+
+.login_area {
+    background: #eeeeee;
+    width: 480px;
+    display: flex;
+    float: right;
+    margin: 100px 20px 20px 20px;
+    border-radius: 7px;
+}

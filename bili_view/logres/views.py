@@ -21,8 +21,7 @@ def get_geetest(request):
 #首页
 def index(request):
     if request.method == 'GET':
-        form_obj = myforms.Register()
-        return render(request, 'index.html', {'forms_obj': form_obj})
+        return render(request, 'index.html')
 
 
 # 登录函数
@@ -30,7 +29,6 @@ def login(request):
     if request.method == "POST":
         # 初始化登录状态字典
         ret = {'status': False, 'mes': None}
-
         # 获取极验所需验证信息
         gt = GeetestLib(pc_geetest_id, pc_geetest_key)
         challenge = request.POST.get(gt.FN_CHALLENGE, '')
@@ -67,9 +65,11 @@ def login(request):
 # 注册函数
 def register(request):
     if request.method == 'GET':
+        if request.userinfo:
+            return redirect('/index/')
         # 传入空的表单对象生成HTML标签
         form_obj = myforms.Register()
-        return render(request, 'new_register.html', {'forms_obj': form_obj})
+        return render(request, 'resgister.html', {'forms_obj': form_obj})
 
     else:
         # 创建一个form对象
@@ -80,7 +80,6 @@ def register(request):
         # 如果通过form校验
         if reg_obj.is_valid():
             print('通过校验')
-            reg_obj.cleaned_data.pop('re_password')
             avator_img = request.FILES.get('avator')
             # 在数据库创建信息
             models.UserInfo.objects.create(avator=avator_img, **reg_obj.cleaned_data)
