@@ -22,7 +22,7 @@ from django.conf import settings
 
 urlpatterns = [
     re_path('^$', views.register),
-    re_path(r'index/', views.index),
+    re_path(r'^index/', views.index),
     #登录
     re_path('^login/$', views.login),
     #注册
@@ -32,7 +32,7 @@ urlpatterns = [
     #设置
     re_path(r'settings/$', views.settings),
 
-
+    re_path(r'myadmin/index/$', myadmin.site.index),
     re_path('myadmin/', myadmin.site.urls),
 
     #处理极验滑动验证码的视图函数

@@ -1,17 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>查询页面</title>
-    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+{% extends "base_look.html" %}
+
+{% block css_link %}
     <link rel="stylesheet" href="/static/look_css.css">
-</head>
-<body>
+{% endblock %}
 
-    <div class="show_head">
-        <div class="head_title">B站数据查看页面</div>
-    </div>
-
+{% block body %}
     <div class="show_body">
         <div class="left_modellist">
             {% if showlist %}
@@ -20,16 +13,14 @@
                 {% endfor %}
             {% else %}
                 {% for model_name, model_url in url_dict.items %}
-                <div class="model_list"><a href="{{ model_url }}">{{ model_name }}</a></div>
+                <div class="model_list"><a href="/{{ model_url }}">{{ model_name }}</a></div>
                 {% endfor %}
             {% endif %}}
         </div>
         <div class="right_showdata">
             <div class="container">
         <div class="row">
-
             <div class="col-lg-9">
-
                 <!--搜索框-->
                 {% if showlist.model_myadmin.search_fields %}
                     <form action="" class="pull-right search-input" >
@@ -121,8 +112,10 @@
     </div>
         </div>
     </div>
-    <script src="/static/jquery-3.3.1.js"></script>
-    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+
+{% endblock %}
+
+{% block script %}
     <script>
         //如果点击表头表示全选
         $('#queryset_select').click(function(){
@@ -135,6 +128,6 @@
             }
         })
     </script>
-
+{% endblock %}
 </body>
 </html>

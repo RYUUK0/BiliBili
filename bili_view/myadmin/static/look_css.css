@@ -1,6 +1,5 @@
 .select_form {
     margin-bottom: 10px;
-
     margin-top: 20px;
 }
 
@@ -9,35 +8,22 @@
     width: 125px;
 }
 
-/*头部样式*/
-.show_head {
-    height: 100px;
-    width: 100%;
-    background: #5bc0de;
-    line-height: 100px;
-    margin-bottom: 20px;
-}
 
-.head_title {
-    height: 100px;
-    font-size: 20px;
-}
 
 
 /*左侧模型表列表*/
 .left_modellist {
-    width: 17%;
+    width: 18%;
     height: 100%;
     position: fixed;
-    top: 100px;
+    top: 70px;
     left: 0px;
-    background: yellow;
+    background: rgba(255, 255, 0, 0.7);
 }
 .model_list {
     width: 100%;
     height: 50px;
     font-size: 20px;
-
     padding-left: 20px;
     border-bottom: solid 1px white;
 }
@@ -49,11 +35,11 @@
 /*右侧数据展示*/
 .right_showdata {
     position: fixed;
-    top: 100px;
-    left: 20%;
+    top: 80px;
+    left: 19%;
     margin-top: 10px;
     height: 500px;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 .search-input {
     margin-bottom: 10px;

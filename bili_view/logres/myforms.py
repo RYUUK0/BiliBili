@@ -175,9 +175,6 @@ class Set_Phone(forms.Form):
                                error_messages = {
                                    'required': '请输入新phone',
                                })
-
-
-
 #设置数据校验
 class Clean_Set():
 
