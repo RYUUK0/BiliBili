@@ -5,7 +5,8 @@
     <title>呵呵</title>
 
     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/base_index.css">
+    <link rel="stylesheet" href="/static/index.css">
+    <link rel="stylesheet" href="/static/interview_index.css">
     {% block css_link %}
     {% endblock %}
 </head>
@@ -33,6 +34,13 @@
         <div class="logo_res">
             <div class="logo_area">
                 <img id="body_logo" src="/static/img/background.png">
+            </div>
+            <div class="show_body">
+                <div class="left_func_list">
+                    <div class="func"><a href="/interview/add/">数组加法</a></div>
+                    <div class="func"><a href="/interview/date/">查看当前日期</a></div>
+                    <div class="func"><a href="/interview/chat/">聊天机器人</a></div>
+                </div>
             </div>
             {%  block body %}
             {% endblock %}

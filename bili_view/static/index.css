@@ -3,7 +3,8 @@
     background-color: rgb(35, 38, 56);
     width: 100%;
     height: 70px;
-    line-height: 70px
+    line-height: 70px;
+    position: fixed;
 }
 #head_logo {
     wight: 50px;
@@ -30,7 +31,7 @@
 .view_body {
     background: url('/static/img/picture_body.png'), #122b40;
     background-size: cover;
-    height: 564px;
+    height: 680px;
 }
 .logo_res {
     height: 100%;

@@ -14,8 +14,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from logres import views
+from interview.views import get_interview_index, Add
 from myadmin.service import myadmin
-from django.urls import path, re_path
+from django.urls import path, re_path, include
 from django.views.static import serve
 from django.conf import settings
 
@@ -34,6 +35,10 @@ urlpatterns = [
 
     re_path(r'myadmin/index/$', myadmin.site.index),
     re_path('myadmin/', myadmin.site.urls),
+
+    #关于面试URL
+    re_path(r'^interview/', include("interview.urls")),
+
 
     #处理极验滑动验证码的视图函数
     re_path(r'^pc-geetest/register', views.get_geetest),

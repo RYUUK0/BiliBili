@@ -1,0 +1,68 @@
+{% extends "interview_base.html" %}
+
+{% block css_link %}
+    <link rel="stylesheet" href="/static/interview_add.css">
+{% endblock %}
+{% block body %}
+    <div class="finish_display_area">
+        <form action="/interview/add" method="post" id="display_form">
+            {% csrf_token %}
+            <div id="input_area">
+                <div class="input_div"><input type="text" class="input_num"></div>
+            </div>
+            <div class="btn_area">
+                <input type="text" id="finish" disabled="disabled">
+                <input type="button" class="btn-success" value="添加数字" onclick="add_input()">
+                <input type="button" class="btn-success" value="计算结果" onclick="send_nums()">
+            </div>
+
+        </form>
+    </div>
+{% endblock %}
+
+
+{% block script %}
+    <script>
+        function add_input() {
+            $("#input_area").append("<div class='input_div'><input type='text' class='input_num'></div>");
+        }
+
+
+
+        function send_nums() {
+            var senddata = {};
+            var nums_list = [];
+            $(".input_num").each(function() {
+                data = {};
+                data['value'] = $(this).val();
+                nums_list.push(data);
+            });
+
+            senddata['value_array'] = JSON.stringify(nums_list);
+            senddata['csrfmiddlewaretoken'] =  $("[name = 'csrfmiddlewaretoken']").val();
+            console.log(senddata);
+            $.ajax({
+                url: '/interview/add/',
+                data: senddata,
+                type: 'POST',
+                success: function(data) {
+                    var res = JSON.parse(data);
+                    if (res.status) {
+                        console.log(res);
+                        console.log(res.result);
+                        $('#finish').val(res.result)
+                    }
+                    else {
+                        $('#finish').val(res.result)
+                        $('.input_num').each(function(){
+                            $(this).val('')
+                        })
+                    }
+                }
+
+            })
+        }
+    </script>
+
+
+{% endblock %}

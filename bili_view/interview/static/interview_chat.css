@@ -1,0 +1,25 @@
+.chat_area {
+    position: fixed;
+
+    left: 400px;
+    top: 150px;
+    background: #eeeeee;
+    padding: 20px 20px;
+}
+.all_input_area {
+    width: 400px;
+    height: 200px;
+    margin: 20px 20px;
+    overflow-y: scroll;
+}
+.input_area {
+    margin: 10px 20px;
+}
+.robot_input {
+    position: relative;
+    right: -20px;
+}
+.my_input {
+    position: relative;
+    left: -20px;
+}

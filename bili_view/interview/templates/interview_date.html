@@ -1,0 +1,40 @@
+{% extends 'interview_base.html' %}
+
+
+
+{% block css_link %}
+    <link rel="stylesheet" href="/static/interview_date.css">
+{% endblock %}
+
+
+{% block body %}
+    <div class="display_area">
+        <h4>日期:</h4><h3 id="day_area">{{ res.date }}</h3>
+        <h4>时间:</h4><h3 id="sec_area">{{ res.tt }}</h3>
+        <div>
+        <a href="/interview/date"><input type="button" class="btn btn-success" value="刷新"></a>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block script %}
+
+    <!--用ajax发送
+    <script>
+        $('.sss').click(
+            $.ajax({
+                url: '/interview/date',
+                type: 'GET',
+                success: function(data){
+                    res = JSON.parse(data);
+                    $('#date_area').val(res.date);
+                    $('#sec_area').val(res.tt);
+                }
+            })
+        )
+    </script>
+    -->
+
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'interview_base.html' %}
+
+
+{% block css_link %}
+    <link rel="stylesheet" href="/static/interview_chat.css">
+{% endblock %}
+
+
+
+{% block body %}
+    <div class="chat_area">
+        <div class="all_input_area">
+            {% csrf_token %}
+
+        </div>
+        <div class="send_area">
+            <input type="text" class="send_data">
+            <input type="button" id="send_btn" class="btn btn-success" value="发送">
+        </div>
+    </div>
+{% endblock %}
+
+
+
+{% block script %}
+    <script>
+        function create_my_input(res) {
+            var my_input = $("<div>");
+            var input = $("<input>");
+            input.attr({'type':'text', 'disabled':'disabled'});
+            input.val(res);
+            my_input.attr('class','input_area my_input');
+            my_input.append('自己: ')
+            my_input.append(input);
+            $('.all_input_area').append(my_input);
+        }
+        function create_robot_input(res) {
+            var input_div = "<div class='input_area robot_input'><input type='text' disabled='disabled' value="+res+">回复</div>";
+            var robot_input = $("<div>");
+            var input = $("<input>");
+            input.attr({'type':'text', 'disabled':'disabled'});
+            input.val(res);
+            robot_input.attr('class','input_area robot_input');
+            robot_input.append(input);
+            robot_input.append(' :回复');
+            $('.all_input_area').append(robot_input)
+        }
+
+        $("#send_btn").click(
+            function(){
+                var data = {};
+                data['msg'] = $('.send_data').val();
+                data['csrfmiddlewaretoken'] =  $("[name = 'csrfmiddlewaretoken']").val();
+                create_my_input(data['msg']);
+                $.ajax({
+                    url: '/interview/chat/',
+                    type: "POST",
+                    data: data,
+                    success: function(data) {
+                        res = JSON.parse(data);
+                        alert(res.result);
+                        create_robot_input(res.result);
+                    }
+                });
+            }
+        )
+    </script>
+
+{% endblock %}

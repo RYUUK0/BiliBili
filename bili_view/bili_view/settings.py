@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'myadmin.apps.MyadminConfig',
     'showdata.apps.ShowdataConfig',
     'logres.apps.LogresConfig',
+    'interview.apps.InterviewConfig',
 ]
 
 MIDDLEWARE = [
