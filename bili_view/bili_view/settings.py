@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'hc-8+q+x5(2!nd2ij!-g9yeu-coi6^(q@q^8tl33gw=8t)yy%5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['39.97.102.130']
 
 
 # Application definition
@@ -83,8 +83,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'bilibili_sql',
-        'USER': 'root',
-        'PASSWORD': '',
+        'USER': 'bilisql',
+        'PASSWORD': 'bilisql',
         'HOST': '127.0.0.1',
         'PORT': 3306,
     }
@@ -129,6 +129,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), )
+STATIC_ROOT = '/home/bilidata/static'
 
 
 MEDIA_URL = '/media/'
