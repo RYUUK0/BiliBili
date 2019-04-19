@@ -1,5 +1,5 @@
 import pymysql
-from get_video import GVI
+from bili_spider.get_video import GVI
 
 av_num = 38450273
 video_data = GVI(aid = av_num)

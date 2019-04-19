@@ -1,5 +1,5 @@
-from insert_video import ISVI
-from get_video import GVI
+from bili_spider.insert_video import ISVI
+from bili_spider.get_video import GVI
 import time
 import threadpool
 
@@ -22,6 +22,7 @@ def get_and_insert(aid):
         obj = ISVI(gvi_obj=video_data)
         res = obj.insert_all()
 
+#爬虫开始
 def run(begin, end):
     if isinstance(begin, int) and isinstance(end, int):
         if end > begin and begin > 0:

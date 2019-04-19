@@ -102,7 +102,7 @@ class ISVI(object):
 
 
 if __name__ == '__main__':
-    from get_video import GVI
+    from bili_spider.get_video import GVI
     av_num = 25474079
     video_data = GVI(aid=av_num)
 

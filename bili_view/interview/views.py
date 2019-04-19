@@ -99,6 +99,8 @@ class Chat(View):
             if alive_count > 1:
                 print('匹配到多个')
                 res['result'] = anwser_dict['both']
+            elif alive_count == 0:
+                res['result'] = '这超出了我的能力范围'
         else:
             res['result'] = '我听不见'
 

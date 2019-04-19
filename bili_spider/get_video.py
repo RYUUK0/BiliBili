@@ -47,7 +47,6 @@ class GVI(object):
     def __init__(self, aid):
         self.url = video_url = 'https://api.bilibili.com/x/web-interface/view?aid={}'.format(aid)
         self.response = requests.get(url=video_url, headers=self.user_agent)
-        self.response = self.response
         self._info_dict = json.loads(self.response.text)
         self.data = self._info_dict.get('data')
 

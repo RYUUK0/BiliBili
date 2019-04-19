@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'hc-8+q+x5(2!nd2ij!-g9yeu-coi6^(q@q^8tl33gw=8t)yy%5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['39.97.102.130']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -83,8 +83,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'bilibili_sql',
-        'USER': 'bilisql',
-        'PASSWORD': 'bilisql',
+        'USER': 'root',
+        'PASSWORD': '',
         'HOST': '127.0.0.1',
         'PORT': 3306,
     }

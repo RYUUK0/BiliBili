@@ -5,6 +5,7 @@
     height: 70px;
     line-height: 70px;
     position: fixed;
+    z-index: 100;
 }
 #head_logo {
     wight: 50px;
@@ -31,12 +32,15 @@
 .view_body {
     background: url('/static/img/picture_body.png'), #122b40;
     background-size: cover;
-    height: 680px;
+    height: 980px;
+
+
 }
 .logo_res {
     height: 100%;
     padding-right: 120px;
     padding-left: 120px;
+    height: 100%;
 }
 .logo_area {
     margin-top: 150px;
